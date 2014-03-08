@@ -3,7 +3,7 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Engine.Matrix.Matrix (
+module GLMatrix (
     translationMatrix, frustumMatrix,
     identityMatrix, toGLFormat, withMatrix,
     matrixMulVec, matrix4x4To3x3, matrix3x3To4x4,
