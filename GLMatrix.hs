@@ -51,7 +51,7 @@ instance Num Matrix4x4 where
 setMatrix4x4Uniform :: GLuint -> Matrix4x4 -> String -> IO ()
 setMatrix4x4Uniform shader matrix var = do
     loc <- withCString var $ glGetUniformLocation shader
-    withMatrix matrix (glUniformMatrix4fv loc 1 (fromIntegral GL_FALSE))
+    withMatrix matrix (glUniformMatrix4fv loc 1 GL_FALSE)
 
 withMatrix :: Matrix4x4 -> (Ptr GLfloat -> IO a) -> IO a
 withMatrix = withArray . toGLFormat
