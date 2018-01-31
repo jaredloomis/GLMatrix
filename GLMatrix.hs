@@ -3,6 +3,7 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE PatternSynonyms #-}
 module GLMatrix (
     translationMatrix, frustumMatrix,
     identityMatrix, toGLFormat, withMatrix,
@@ -18,9 +19,9 @@ import Data.List (transpose)
 import Foreign (Ptr)
 import Foreign.C (withCString)
 import Foreign.Marshal.Array (withArray)
-import Graphics.Rendering.OpenGL.Raw
+import Graphics.GL
     (GLfloat, GLuint, glGetUniformLocation,
-     glUniformMatrix4fv, gl_FALSE)
+     glUniformMatrix4fv, pattern GL_FALSE)
 
 -- | 4x4 Matrix in the OpenGL orientation:
 --   translation column is the last 4 elements.
@@ -50,7 +51,7 @@ instance Num Matrix4x4 where
 setMatrix4x4Uniform :: GLuint -> Matrix4x4 -> String -> IO ()
 setMatrix4x4Uniform shader matrix var = do
     loc <- withCString var $ glGetUniformLocation shader
-    withMatrix matrix (glUniformMatrix4fv loc 1 (fromIntegral gl_FALSE))
+    withMatrix matrix (glUniformMatrix4fv loc 1 GL_FALSE)
 
 withMatrix :: Matrix4x4 -> (Ptr GLfloat -> IO a) -> IO a
 withMatrix = withArray . toGLFormat
